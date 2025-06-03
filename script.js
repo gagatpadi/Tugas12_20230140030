@@ -1,35 +1,30 @@
 function kirimData() {
-  const name = document.getElementById("nama").value;
-  const nim = document.getElementById("nim").value;
-  const peminatanRadio = document.querySelector("input[name=peminatan]:checked");
-  const alamat = document.getElementById("alamat").value;
+  const nama = document.getElementById("nama").value.trim();
+  const nohp = document.getElementById("nohp").value.trim();
+  const daerah = document.getElementById("daerah").value;
+  const jenisKosEl = document.querySelector("input[name=jeniskos]:checked");
 
-  if (!name || !nim || !peminatanRadio || !alamat) {
-    showToast("Harap isi semua data!", true);
+  if (!nama || !nohp || !daerah || !jenisKosEl) {
+    showModal("⚠️ Harap isi semua kolom dan pilih jenis kosan.");
     return;
   }
 
-  const peminatan = peminatanRadio.value;
-
-  const message = `
-    Data berhasil dikirim broo!!!!
-    Nama       : ${name}
-    NIM        : ${nim}
-    Peminatan  : ${peminatan}
-    Alamat     : ${alamat}
-  `;
-
-  showToast(message);
+  const jenisKos = jenisKosEl.value;
+  const message = `📄 Detail Pencarian Kosan:\n\n🧑 Nama: ${nama}\n📱 Nomor HP: ${nohp}\n🏠 Jenis Kosan: ${jenisKos}\n📍 Daerah: ${daerah}`;
+  showModal(message);
 }
 
-function showToast(message, isError = false) {
-  const toast = document.getElementById("toast");
-  toast.classList.remove("hidden");
-  toast.classList.remove("bg-green-500", "bg-red-500");
-  toast.classList.add(isError ? "bg-red-500" : "bg-green-500");
-  toast.textContent = message;
+function showModal(content) {
+  const modal = document.getElementById("modal");
+  const modalContent = document.getElementById("modalContent");
 
-  setTimeout(() => {
-    toast.classList.add("hidden");
-  }, 5000);
+  modalContent.textContent = content;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeModal() {
+  const modal = document.getElementById("modal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
 }
